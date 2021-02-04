@@ -6,19 +6,19 @@
                 <img src="../assets/logo.png" alt="">
             </div>
             <!-- 登录表单区域-->
-            <el-form label-width="0px" class="login_form">
+            <el-form ref="loginFormRef" :model="loginForm" :rules="loginFormRules" abel-width="0px" class="login_form">
                 <!-- 用户名 -->
-                <el-form-item>
-                    <el-input prefix-icon="iconfont icon-denglu"></el-input>
+                <el-form-item prop="username">
+                    <el-input v-model="loginForm.username" prefix-icon="iconfont icon-denglu"></el-input>
                 </el-form-item>
                 <!-- 密码 -->
-                <el-form-item>
-                    <el-input prefix-icon="iconfont icon-mima"></el-input>
+                <el-form-item prop="password">
+                    <el-input v-model="loginForm.password" prefix-icon="iconfont icon-mima" type="password"></el-input>
                 </el-form-item>
                 <!-- 按钮区域 -->
                 <el-form-item class="login_btns">
-                    <el-button type="primary">登录</el-button>
-                    <el-button type="info">重置</el-button>
+                    <el-button type="primary" @click="login">登录</el-button>
+                    <el-button type="info" @click="resetLoginForm">重置</el-button>
                 </el-form-item>
             </el-form>
         </div>
@@ -26,7 +26,48 @@
 </template>
 
 <script>
-export default {}
+export default {
+  data () {
+    return {
+      loginForm: {
+        username: '',
+        password: ''
+      },
+      loginFormRules: {
+        username: [
+          { required: true, message: '请输入您的账号', trigger: 'blur' },
+          { min: 6, max: 64, message: '长度请在6位-64位之间', trigger: 'blur' }
+        ],
+        password: [
+          { required: true, message: '请输入您的密码', trigger: 'blur' },
+          { min: 8, max: 30, message: '长度请在8-30位之间', trigger: 'blur' }
+        ]
+      }
+    }
+  },
+  methods: {
+    resetLoginForm () {
+      this.$refs.loginFormRef.resetFields()
+    },
+    login () {
+      this.$refs.loginFormRef.validate(async valid => {
+        if (!valid) {
+          console.log('arr')
+          return false
+        }
+        const result = this.$http({
+            method: 'post',
+            url: '/api/show/user/login',
+            params: {
+                username: this.loginForm.username,
+                password: this.loginForm.password
+            }
+        })
+        console.log(result)
+      })
+    }
+  }
+}
 </script>
 
 <style lang="less" scoped>

@@ -5,6 +5,9 @@ import './plugins/element.js'
 // 导入全局样式表
 import './assets/css/global.css'
 import './assets/icons/iconfont.css'
+import axios from 'axios'
+
+Vue.prototype.$http = axios
 Vue.config.productionTip = false
 
 new Vue({
