@@ -8,12 +8,12 @@
             <!-- 登录表单区域-->
             <el-form ref="loginFormRef" :model="loginForm" :rules="loginFormRules" abel-width="0px" class="login_form">
                 <!-- 用户名 -->
-                <el-form-item prop="username">
-                    <el-input v-model="loginForm.username" prefix-icon="iconfont icon-denglu"></el-input>
+                <el-form-item prop="username" class="login_input">
+                    <el-input v-model="loginForm.username" prefix-icon="iconfont icondenglu"></el-input>
                 </el-form-item>
                 <!-- 密码 -->
                 <el-form-item prop="password">
-                    <el-input v-model="loginForm.password" prefix-icon="iconfont icon-mima" type="password"></el-input>
+                    <el-input v-model="loginForm.password" prefix-icon="iconfont iconmima" type="password"></el-input>
                 </el-form-item>
                 <!-- 按钮区域 -->
                 <el-form-item class="login_btns">
@@ -69,10 +69,10 @@ export default {
   }
 }
 </script>
-
 <style lang="less" scoped>
 .login_container{
-    background-color: #2b4b6b;
+    background-image: url("../assets/images/login_background_img.jpg");
+    background-size: 100% 100%;
     height: 100%;
 }
 
@@ -85,6 +85,10 @@ export default {
     left: 50%;
     top: 50%;
     transform: translate(-50%, -50%);
+    background-color: rgba(130,187,232,0.1);
+    -moz-box-shadow:4px -4px 50px #57E7F4;
+    -webkit-box-shadow:4px -2px 50px #57E7F4;
+    box-shadow:4px -4px 50px #fff;
 }
 
 .avatar_box{
@@ -102,7 +106,7 @@ export default {
         width: 100%;
         height: 100%;
         border-radius: 50%;
-        background-color: #eee;
+    background-color: rgba(130,187,232,0.1);
     }
 }
 
@@ -112,10 +116,18 @@ export default {
     width: 100%;
     padding: 0 20px;
     box-sizing: border-box;
+    
 }
 
 .login_btns{
     display: flex;
     justify-content: flex-end;
 }
+
+/deep/ .el-input__inner{
+    background-color: rgba(130,187,232,0.1);
+}
 </style>
+
+
+
