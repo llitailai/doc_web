@@ -7,36 +7,44 @@
       </div>
       <!-- 登录表单区域-->
       <el-form
-        ref="loginFormRef"
-        :model="loginForm"
-        :rules="loginFormRules"
+        ref="registerFormRef"
+        :model="registerForm"
+        :rules="registerFormRules"
         abel-width="0px"
         class="login_form"
       >
         <!-- 邮箱 -->
-        <el-form-item prop="email" class="login_input">
+        <el-form-item prop="email">
           <el-input
-            v-model="loginForm.email"
+            v-model="registerForm.email"
             prefix-icon="iconfont iconyouxiang"
           ></el-input>
         </el-form-item>
-        <el-form-item prop="tel" class="login_input">
+        <el-form-item prop="tel">
           <el-input
-            v-model="loginForm.tel"
+            v-model="registerForm.tel"
             prefix-icon="iconfont icondianhua"
           ></el-input>
         </el-form-item>
         <!-- 密码 -->
         <el-form-item prop="password">
           <el-input
-            v-model="loginForm.password"
+            v-model="registerForm.password"
+            prefix-icon="iconfont iconmima"
+            type="password"
+          ></el-input>
+        </el-form-item>
+        <el-form-item prop="repassword">
+          <el-input
+            v-model="registerForm.repassword"
             prefix-icon="iconfont iconmima"
             type="password"
           ></el-input>
         </el-form-item>
         <!-- 按钮区域 -->
         <el-form-item class="login_btns">
-          <el-button type="primary" @click="login">登录</el-button>
+          <el-button type="primary" @click="register">注册</el-button>
+          <el-button type="success" @click="login">登录</el-button>
           <el-button type="info" @click="resetLoginForm">重置</el-button>
         </el-form-item>
       </el-form>
@@ -46,86 +54,111 @@
 
 <script>
 export default {
-  data() {
+  data () {
     var checkEmail = (rule, value, callback) => {
       if (!value) {
-        if (this.loginForm.tel === '') {
-          return callback(new Error('请输入您的邮箱'));
+        if (this.registerForm.tel === '') {
+          return callback(new Error('请输入您的邮箱'))
+        } else {
+          return callback()
         }
       } else {
-        if (value.length < 6 || value.length > 64) {
-          return callback(new Error('长度请在6位-64位之间'));
-        }
-
-        const emailPattern =
-          /^\w[-\w.+]*@([A-Za-z0-9][-A-Za-z0-9]+\.)+[A-Za-z]{2,14}/;
-        if (!emailPattern.test(value)) {
-          return callback(new Error('邮箱格式不正确'));
+        const emailPattern = /^\w[-\w.+]*@([A-Za-z0-9][-A-Za-z0-9]+\.)+[A-Za-z]{2,14}/
+        if (
+          value.length < 6 ||
+          value.length > 64 ||
+          !emailPattern.test(value)
+        ) {
+          return callback(new Error('邮箱格式不正确'))
+        } else {
+          return callback()
         }
       }
-    };
+    }
 
     var checkTel = (rule, value, callback) => {
       if (!value) {
-        if (this.loginForm.email === '') {
-          return callback(new Error('请输入您的电话号码'));
+        if (this.registerForm.email === '') {
+          return callback(new Error('请输入您的电话号码'))
+        } else {
+          return callback()
         }
       } else {
-        const telPattern =
-          /^((13[0-9])|(14[0,1,4-9])|(15[0-3,5-9])|(16[2,5,6,7])|(17[0-8])|(18[0-9])|(19[0-3,5-9]))\\d{8}$/;
+        const telPattern = /^(13[0-9]|14[01456879]|15[0-35-9]|16[2567]|17[0-8]|18[0-9]|19[0-35-9])\d{8}$/
         if (!telPattern.test(value)) {
-          return callback(new Error('电话格式不正确'));
+          return callback(new Error('电话格式不正确'))
+        } else {
+          return callback()
         }
       }
-    };
+    }
 
     var checkPass = (rule, value, callback) => {
-        if(!value){
-            return callback(new Error('请输入您的密码'));
+      if (!value) {
+        return callback(new Error('请输入您的密码'))
+      } else {
+        if (value.length < 8 || value.length > 30) {
+          return callback(new Error('长度请在8-30位之间'))
+        } else {
+          return callback()
         }
-        if(value.length < 8 || value.length >30){
-            return callback(new Error('长度请在8-30位之间'))
-        }
+      }
+    }
+
+    var checkPassIsRight = (rule, value, callback) => {
+      if (!value) {
+        return callback(new Error('请再次输入您的密码'))
+      } else if (
+        value.length !== this.registerForm.password.length ||
+        value !== this.registerForm.password
+      ) {
+        return callback(new Error('两次输入密码不一致'))
+      } else {
+        return callback()
+      }
     }
     return {
-      loginForm: {
-        email: "",
-        tel: "",
-        password: "",
+      registerForm: {
+        email: '',
+        tel: '',
+        password: '',
+        repassword: ''
       },
-      loginFormRules: {
-        email: [{ validator: checkEmail, trigger: "blur" }],
-        password: [
-          { required: true, message: "请输入您的密码", trigger: "blur" },
-          { min: 8, max: 30, message: "长度请在8-30位之间", trigger: "blur" },
-        ],
-        tel: [{ validator: checkTel, trigger: "blur" }],
-      },
-    };
+      registerFormRules: {
+        email: [{ validator: checkEmail, trigger: 'blur' }],
+        password: [{ validator: checkPass, trigger: 'blur' }],
+        tel: [{ validator: checkTel, trigger: 'blur' }],
+        repassword: [{ validator: checkPassIsRight, trigger: 'blur' }]
+      }
+    }
   },
   methods: {
-    resetLoginForm() {
-      this.$refs.loginFormRef.resetFields();
+    resetLoginForm () {
+      this.$refs.registerFormRef.resetFields()
     },
-    login() {
-      this.$refs.loginFormRef.validate("email", async (valid) => {
+    register () {
+      this.$refs.registerFormRef.validate((valid) => {
+        console.log('execute ---------------------------------------- ')
         if (!valid) {
-          console.log("arr");
-          return false;
+          return false
         }
         const result = this.$http({
-          method: "post",
-          url: "/api/show/user/login",
-          params: {
-            username: this.loginForm.username,
-            password: this.loginForm.password,
-          },
-        });
-        console.log(result);
-      });
+          method: 'post',
+          url: '/api/show/user/register',
+          data: {
+            tel: this.registerForm.tel,
+            email: this.registerForm.email,
+            password: this.registerForm.password
+          }
+        })
+        console.log(result)
+      })
     },
-  },
-};
+    login () {
+      this.$router.push({ path: '/login' })
+    }
+  }
+}
 </script>
 
 <style lang="less" scoped>
@@ -137,7 +170,7 @@ export default {
 
 .login_box {
   width: 450px;
-  height: 350px;
+  height: 400px;
   background-color: #fff;
   border-radius: 3px;
   position: absolute;
@@ -183,7 +216,7 @@ export default {
 }
 
 /deep/ .el-input__inner {
-  background-color: rgba(130, 187, 232, 0.1);
+  background-color: rgba(140, 197, 240, 0.1);
+  color: rgba(171, 206, 233, 0.5);
 }
 </style>
-
