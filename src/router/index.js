@@ -7,7 +7,7 @@ import Index from '../components/Index.vue'
 Vue.use(VueRouter)
 
 const routes = [
-  { path: '/', redirect: '/login' },
+  { path: '/', redirect: '/index' },
   { path: '/login', component: Login },
   { path: '/register', component: Register },
   { path: '/main', component: Main },
@@ -15,7 +15,7 @@ const routes = [
 ]
 
 const permitThrougn = [
-  '/login', '/main', '/index'
+  '/login', '/main', '/index', "/register"
 ]
 
 const router = new VueRouter({

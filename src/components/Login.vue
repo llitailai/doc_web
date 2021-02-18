@@ -18,6 +18,7 @@
           <el-input
             v-model="loginForm.username"
             prefix-icon="iconfont icondenglu"
+            placeholder="账号"
           ></el-input>
         </el-form-item>
         <!-- 密码 -->
@@ -26,6 +27,7 @@
             v-model="loginForm.password"
             prefix-icon="iconfont iconmima"
             type="password"
+            placeholder="密码"
           ></el-input>
         </el-form-item>
         <!-- 按钮区域 -->

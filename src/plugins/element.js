@@ -8,7 +8,7 @@ import {
   Submenu,
   MenuItem,
   MenuItemGroup,
-  Message, Container, Header, Aside, Main
+  Message, Container, Header, Aside, Main, Card, Divider, Link
 } from 'element-ui'
 
 import TimeLine from './timeline/index'
@@ -28,7 +28,9 @@ Vue.use(Aside)
 Vue.use(Main)
 Vue.use(TimeLine)
 Vue.use(TimelineItem)
-
+Vue.use(Card)
+Vue.use(Divider)
+Vue.use(Link)
 Vue.prototype.$message = function (msg) {
   Message(msg)
 }

@@ -18,12 +18,14 @@
           <el-input
             v-model="registerForm.email"
             prefix-icon="iconfont iconyouxiang"
+            placeholder="邮箱(xxxx@xxx.com)"
           ></el-input>
         </el-form-item>
         <el-form-item prop="tel">
           <el-input
             v-model="registerForm.tel"
             prefix-icon="iconfont icondianhua"
+            placeholder="手机号码(11位)"
           ></el-input>
         </el-form-item>
         <!-- 密码 -->
@@ -32,6 +34,7 @@
             v-model="registerForm.password"
             prefix-icon="iconfont iconmima"
             type="password"
+            placeholder="密码长度8-30位"
           ></el-input>
         </el-form-item>
         <el-form-item prop="repassword">
@@ -39,6 +42,7 @@
             v-model="registerForm.repassword"
             prefix-icon="iconfont iconmima"
             type="password"
+            placeholder="重复密码"
           ></el-input>
         </el-form-item>
         <!-- 按钮区域 -->
