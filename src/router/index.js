@@ -4,6 +4,7 @@ import Login from '../components/Login.vue'
 import Register from '../components/Register.vue'
 import Main from '../components/Main.vue'
 import Index from '../components/Index.vue'
+import Lover from '../components/Lover.vue'
 Vue.use(VueRouter)
 
 const routes = [
@@ -11,11 +12,12 @@ const routes = [
   { path: '/login', component: Login },
   { path: '/register', component: Register },
   { path: '/main', component: Main },
-  { path: '/index', component: Index }
+  { path: '/index', component: Index },
+  { path: '/love', component: Lover }
 ]
 
 const permitThrougn = [
-  '/login', '/main', '/index', '/register'
+  '/login', '/main', '/index', '/register', '/love'
 ]
 
 const router = new VueRouter({
