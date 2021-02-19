@@ -28,12 +28,14 @@
 
 <script>
 export default {
-  data:{
+  data() {
+    return {
 
+    }
   },
-  methods:{
-    redirectMain(){
-       this.$router.push({ path: '/main' })
+  methods: {
+    redirectMain() {
+      this.$router.push({ path: '/main' })
     }
   }
 }

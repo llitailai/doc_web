@@ -15,7 +15,7 @@ const routes = [
 ]
 
 const permitThrougn = [
-  '/login', '/main', '/index', "/register"
+  '/login', '/main', '/index', '/register'
 ]
 
 const router = new VueRouter({
